@@ -24,5 +24,5 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: npm run build
-      - run: sudo cp -r /home/ubuntu/actions-runner/_work/mitulp236.github.io/mitulp236.github.io /var/www/mitulp236.github.io
+      - run: sudo cp -r /home/ubuntu/actions-runner/_work/mitulp236.github.io/mitulp236.github.io/build /var/www/mitulp236.github.io
       - run: sudo service nginx restart default
