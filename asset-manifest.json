@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/mitulp236.github.io/static/css/main.8c8b27cf.chunk.css",
-    "main.js": "/mitulp236.github.io/static/js/main.b60bb20c.chunk.js",
-    "main.js.map": "/mitulp236.github.io/static/js/main.b60bb20c.chunk.js.map",
+    "main.js": "/mitulp236.github.io/static/js/main.d77b5e52.chunk.js",
+    "main.js.map": "/mitulp236.github.io/static/js/main.d77b5e52.chunk.js.map",
     "runtime-main.js": "/mitulp236.github.io/static/js/runtime-main.b3f11ae1.js",
     "runtime-main.js.map": "/mitulp236.github.io/static/js/runtime-main.b3f11ae1.js.map",
     "static/js/2.335d2f14.chunk.js": "/mitulp236.github.io/static/js/2.335d2f14.chunk.js",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.b3f11ae1.js",
     "static/js/2.335d2f14.chunk.js",
     "static/css/main.8c8b27cf.chunk.css",
-    "static/js/main.b60bb20c.chunk.js"
+    "static/js/main.d77b5e52.chunk.js"
   ]
 }
