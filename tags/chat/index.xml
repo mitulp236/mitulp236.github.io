@@ -1,0 +1,24 @@
+
+  <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+      <title>Mitul Patel</title>
+      <link>https://tailwind-nextjs-starter-blog.vercel.app/blog</link>
+      <description>A web developer portfolio</description>
+      <language>en-us</language>
+      <managingEditor>mitulp236@gmail.com (Mitul Patel)</managingEditor>
+      <webMaster>mitulp236@gmail.com (Mitul Patel)</webMaster>
+      <lastBuildDate>Sun, 25 Feb 2024 00:00:00 GMT</lastBuildDate>
+      <atom:link href="https://tailwind-nextjs-starter-blog.vercel.app/tags/chat/index.xml" rel="self" type="application/rss+xml"/>
+      
+  <item>
+    <guid>https://tailwind-nextjs-starter-blog.vercel.app/blog/problems-with-pubnub</guid>
+    <title>Problems with PubNub: A Deep Dive into Chat System Challenges</title>
+    <link>https://tailwind-nextjs-starter-blog.vercel.app/blog/problems-with-pubnub</link>
+    <description>In our client's project, we were tasked with developing a comprehensive chat module. The requirements included functionalities such as one-to-one, group, and community chat, where all users could participate without strict limitations on joining specific chat channels.</description>
+    <pubDate>Sun, 25 Feb 2024 00:00:00 GMT</pubDate>
+    <author>mitulp236@gmail.com (Mitul Patel)</author>
+    <category>Tech</category><category>PubNub</category><category>Chat</category>
+  </item>
+
+    </channel>
+  </rss>

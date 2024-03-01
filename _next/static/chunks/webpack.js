@@ -182,7 +182,7 @@
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	!function() {
-/******/ 		__webpack_require__.h = function() { return "5c362ad58c5b9ebadcda"; }
+/******/ 		__webpack_require__.h = function() { return "d3f410d10c2a213c36af"; }
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -371,7 +371,6 @@
 /******/ 		}
 /******/ 		
 /******/ 		function createModuleHotObject(moduleId, me) {
-/******/ 			var _main = currentChildModule !== moduleId;
 /******/ 			var hot = {
 /******/ 				// private stuff
 /******/ 				_acceptedDependencies: {},
@@ -381,10 +380,10 @@
 /******/ 				_selfDeclined: false,
 /******/ 				_selfInvalidated: false,
 /******/ 				_disposeHandlers: [],
-/******/ 				_main: _main,
+/******/ 				_main: currentChildModule !== moduleId,
 /******/ 				_requireSelf: function () {
 /******/ 					currentParents = me.parents.slice();
-/******/ 					currentChildModule = _main ? undefined : moduleId;
+/******/ 					currentChildModule = moduleId;
 /******/ 					__webpack_require__(moduleId);
 /******/ 				},
 /******/ 		
@@ -985,7 +984,7 @@
 /******/ 				var module = __webpack_require__.c[outdatedModuleId];
 /******/ 				if (
 /******/ 					module &&
-/******/ 					(module.hot._selfAccepted || module.hot._main) &&
+/******/ 					module.hot._selfAccepted &&
 /******/ 					// removed self-accepted modules should not be required
 /******/ 					appliedUpdate[outdatedModuleId] !== warnUnexpectedRequire &&
 /******/ 					// when called invalidate self-accepting is not possible
