@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tools — Mitul Patel</title>
+<meta name="description" content="Rocket Tools — a suite of tiny, elegant, fully client-side tools built by Mitul Patel. No build step, no servers, your data never leaves the browser." />
+<link rel="icon" href="/static/favicons/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--orange:#ff5c00;--cream:#fff4e6;--ink:#1a0f06;--paper:#fff9f2;
+    --lime:#c8ff2e;--sky:#3fd0ff;--pink:#ff6ba6;
+    --shadow:7px 7px 0 var(--ink);--shadow-lg:11px 11px 0 var(--ink);--border:4px solid var(--ink)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Space Grotesk',sans-serif;background:var(--cream);color:var(--ink);
+    min-height:100vh;overflow-x:hidden;cursor:none;padding:16px 24px 70px}
+  ::selection{background:var(--lime)}
+  body::before{content:"";position:fixed;inset:0;z-index:-2;
+    background-image:radial-gradient(var(--orange) 1.4px, transparent 1.4px);
+    background-size:24px 24px;opacity:.18;animation:drift 18s linear infinite}
+  @keyframes drift{to{background-position:240px 240px}}
+  .cursor{position:fixed;width:20px;height:20px;border:3px solid var(--ink);background:var(--orange);
+    border-radius:50%;pointer-events:none;z-index:999;transform:translate(-50%,-50%);
+    transition:width .18s,height .18s,background .18s;mix-blend-mode:multiply}
+  .cursor.big{width:52px;height:52px;background:var(--lime)}
+  .shape{position:fixed;border:var(--border);z-index:-1}
+  .shape.s1{width:56px;height:56px;background:var(--pink);top:18%;right:6%;animation:spin 10s linear infinite}
+  .shape.s2{width:40px;height:40px;background:var(--sky);border-radius:50%;bottom:10%;left:4%;animation:float 6s ease-in-out infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}@keyframes float{50%{transform:translateY(-14px)}}
+
+  .wrap{width:min(1080px,100%);margin:0 auto}
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px}
+  .nav .brand{font-family:'Archivo Black',sans-serif;font-size:1.2rem;background:var(--ink);
+    color:var(--lime);padding:7px 13px;border:var(--border);box-shadow:5px 5px 0 var(--orange);
+    transform:rotate(-2deg);text-decoration:none}
+  .nav .brand:hover{transform:rotate(2deg) scale(1.04)}
+  .nav .tabs{display:flex;gap:9px}
+  .nav .tabs a{font-family:'Archivo Black',sans-serif;font-size:.85rem;text-transform:uppercase;
+    text-decoration:none;color:var(--ink);background:var(--paper);padding:9px 16px;border:var(--border);
+    box-shadow:4px 4px 0 var(--ink);transition:transform .12s,box-shadow .12s,background .12s}
+  .nav .tabs a:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);background:var(--lime)}
+  .nav .tabs a.active{background:var(--orange);color:var(--paper)}
+
+  .page-title{font-family:'Archivo Black',sans-serif;font-size:clamp(2.4rem,7vw,3.6rem);
+    text-transform:uppercase;line-height:.95;margin-bottom:8px;animation:pop .5s cubic-bezier(.2,.9,.3,1.4) both}
+  .page-title .hl{color:var(--orange);position:relative;display:inline-block}
+  .page-title .hl::after{content:"";position:absolute;left:-3px;right:-3px;bottom:5px;height:24%;
+    background:var(--lime);z-index:-1;transform:skew(-8deg)}
+  .page-sub{font-family:'Space Mono',monospace;font-weight:700;background:var(--ink);color:var(--lime);
+    display:inline-block;padding:5px 11px;border:3px solid var(--ink);margin-bottom:34px;transform:rotate(-1deg)}
+  @keyframes pop{from{opacity:0;transform:translateY(24px)}}
+
+  /* project hero */
+  .project{background:var(--orange);border:var(--border);box-shadow:var(--shadow-lg);
+    padding:30px 32px;margin-bottom:16px;animation:rise .5s cubic-bezier(.2,.9,.3,1.4) both}
+  @keyframes rise{from{opacity:0;transform:translateY(28px)}}
+  .project .rocket{font-size:2.2rem;line-height:1}
+  .project h2{font-family:'Archivo Black',sans-serif;font-size:clamp(1.8rem,5vw,2.6rem);
+    color:var(--paper);text-transform:uppercase;margin:10px 0 12px;line-height:1}
+  .project p{color:var(--paper);font-size:1.05rem;line-height:1.6;max-width:720px;margin-bottom:16px}
+  .project p b{background:var(--ink);color:var(--lime);padding:0 5px}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+  .badges span{font-family:'Space Mono',monospace;font-size:.76rem;font-weight:700;
+    background:var(--paper);border:3px solid var(--ink);padding:4px 10px;box-shadow:3px 3px 0 var(--ink)}
+  .cta{display:flex;flex-wrap:wrap;gap:12px}
+  .btn{font-family:'Archivo Black',sans-serif;font-size:.9rem;text-transform:uppercase;text-decoration:none;
+    color:var(--ink);padding:13px 20px;border:var(--border);box-shadow:var(--shadow);
+    transition:transform .12s,box-shadow .12s}
+  .btn.primary{background:var(--lime)}.btn.ghost{background:var(--sky)}
+  .btn:hover{transform:translate(-3px,-3px);box-shadow:11px 11px 0 var(--ink)}
+  .btn:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+
+  .grid-label{font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;text-transform:uppercase;
+    letter-spacing:1px;opacity:.6;margin:28px 0 14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .tool{background:var(--paper);border:var(--border);box-shadow:var(--shadow);padding:18px 18px 16px;
+    transition:transform .14s,box-shadow .14s,background .14s;display:flex;flex-direction:column;gap:7px}
+  .tool:hover{transform:translate(-4px,-4px);box-shadow:var(--shadow-lg);background:#fff}
+  .tool .ic{font-size:1.5rem;width:44px;height:44px;display:grid;place-items:center;
+    background:var(--sky);border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
+  .tool:nth-child(4n+1) .ic{background:var(--lime)}
+  .tool:nth-child(4n+2) .ic{background:var(--pink)}
+  .tool:nth-child(4n+3) .ic{background:var(--orange)}
+  .tool h3{font-family:'Archivo Black',sans-serif;font-size:1.02rem;text-transform:uppercase;line-height:1}
+  .tool p{font-size:.85rem;line-height:1.45;opacity:.85}
+
+  @media(max-width:760px){body{cursor:auto;padding:14px 16px 50px}.cursor,.shape{display:none}
+    .nav{flex-direction:column;gap:12px}.project{padding:24px}}
+  @media(max-width:420px){:root{--shadow:5px 5px 0 var(--ink);--shadow-lg:7px 7px 0 var(--ink)}
+    .grid{grid-template-columns:1fr}.nav .tabs a{font-size:.78rem;padding:8px 13px}}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="shape s1"></div><div class="shape s2"></div>
+
+<div class="wrap">
+  <div class="nav">
+    <a href="/" class="brand" data-hover>MP.</a>
+    <div class="tabs">
+      <a href="/" data-hover>Home</a>
+      <a href="/tools/" class="active" data-hover>Tools</a>
+      <a href="/blog/" data-hover>Blog</a>
+    </div>
+  </div>
+
+  <h1 class="page-title">The <span class="hl">Tools</span></h1>
+  <div class="page-sub">// things I built because I wanted them to exist</div>
+
+  <section class="project">
+    <div class="rocket">🚀</div>
+    <h2>Rocket Tools</h2>
+    <p>A hub of tiny, elegant, <b>fully client-side</b> tools. One cream-and-orange theme, <b>zero build steps</b>, <b>zero servers</b> — every tool is a single HTML page, libraries load straight from a CDN, and <b>your data never leaves your device.</b></p>
+    <div class="badges">
+      <span>🔒 100% private</span>
+      <span>⚡ no build step</span>
+      <span>☁️ no backend, ever</span>
+      <span>📄 standalone HTML</span>
+      <span>🎨 3 themes</span>
+    </div>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/mitulp236/Rocket-tools" target="_blank" rel="noopener" data-hover>View on GitHub →</a>
+      <a class="btn ghost" href="https://github.com/mitulp236/Rocket-tools#the-tools" target="_blank" rel="noopener" data-hover>Read the docs</a>
+    </div>
+  </section>
+
+  <div class="grid-label">// 16 tools in the suite</div>
+  <div class="grid">
+    <div class="tool" data-hover><div class="ic">💬</div><h3>WhatsApp Quick</h3><p>Message any number without saving it — country picker + wa.me deep link.</p></div>
+    <div class="tool" data-hover><div class="ic">🎥</div><h3>Meet</h3><p>P2P group video calls over a shareable link, with screen share (PeerJS mesh).</p></div>
+    <div class="tool" data-hover><div class="ic">📤</div><h3>PeerDrop</h3><p>Send files of any size over encrypted WebRTC, streamed in 64 KB chunks.</p></div>
+    <div class="tool" data-hover><div class="ic">🖊️</div><h3>Whiteboard</h3><p>Infinite Excalidraw canvas, autosaved to your browser's local storage.</p></div>
+    <div class="tool" data-hover><div class="ic">📝</div><h3>Notes</h3><p>Private multi-note pad with search, autosave and a live word count.</p></div>
+    <div class="tool" data-hover><div class="ic">✅</div><h3>Todo</h3><p>Minimal task list — filters, drag to reorder, clear completed.</p></div>
+    <div class="tool" data-hover><div class="ic">{ }</div><h3>JSON Studio</h3><p>Format, validate, tree-view; JSON ↔ YAML and JSON → CSV.</p></div>
+    <div class="tool" data-hover><div class="ic">✍️</div><h3>Markdown</h3><p>EasyMDE editor with live preview; export .md or styled HTML.</p></div>
+    <div class="tool" data-hover><div class="ic">🖼️</div><h3>Image Compressor</h3><p>Convert/resize to WebP, JPEG, PNG (HEIC in); ZIP export.</p></div>
+    <div class="tool" data-hover><div class="ic">📄</div><h3>PDF Toolkit</h3><p>Merge, split, rotate, reorder pages; images → PDF.</p></div>
+    <div class="tool" data-hover><div class="ic">🎨</div><h3>Color Studio</h3><p>Picker, harmonies, gradients, WCAG contrast, saved palette.</p></div>
+    <div class="tool" data-hover><div class="ic">📊</div><h3>CSV Studio</h3><p>Open CSV/XLSX, sort/filter, column stats, clean and export.</p></div>
+    <div class="tool" data-hover><div class="ic">🔳</div><h3>QR Codes</h3><p>Generate (text/Wi-Fi/vCard) and scan via camera or image.</p></div>
+    <div class="tool" data-hover><div class="ic">⏺️</div><h3>Screen Recorder</h3><p>Record tab/window/screen with optional mic; WebM download.</p></div>
+    <div class="tool" data-hover><div class="ic">💻</div><h3>Code Sandbox</h3><p>HTML/CSS/JS playground — live preview, captured console, 1-file export.</p></div>
+    <div class="tool" data-hover><div class="ic">📈</div><h3>Diagram Studio</h3><p>Mermaid editor — flowcharts, sequence, Gantt; SVG/PNG export.</p></div>
+  </div>
+</div>
+
+<script>
+  const cursor=document.getElementById('cursor');
+  let cx=innerWidth/2,cy=innerHeight/2,tx=cx,ty=cy;
+  addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});
+  (function loop(){cx+=(tx-cx)*.2;cy+=(ty-cy)*.2;cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(loop)})();
+  document.querySelectorAll('[data-hover]').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cursor.classList.add('big'));
+    el.addEventListener('mouseleave',()=>cursor.classList.remove('big'));
+  });
+  addEventListener('mousemove',e=>{const dx=(e.clientX/innerWidth-.5),dy=(e.clientY/innerHeight-.5);
+    document.querySelectorAll('.shape').forEach((s,i)=>{const f=(i+1)*12;s.style.marginLeft=dx*f+'px';s.style.marginTop=dy*f+'px'})});
+</script>
+</body>
+</html>

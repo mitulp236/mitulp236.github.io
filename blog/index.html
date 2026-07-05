@@ -59,8 +59,8 @@
   @keyframes rise{from{opacity:0;transform:translateY(28px)}}
   .post:hover{transform:translate(-5px,-5px);box-shadow:var(--shadow-lg);background:#fff}
   .post .meta{font-family:'Space Mono',monospace;font-size:.76rem;font-weight:700;
-    text-transform:uppercase;letter-spacing:1px;opacity:.65;margin-bottom:8px}
-  .post h2{font-family:'Archivo Black',sans-serif;font-size:1.5rem;line-height:1.05;margin-bottom:10px}
+    text-transform:uppercase;letter-spacing:1px;opacity:.65;margin-bottom:8px;padding-right:66px}
+  .post h2{font-family:'Archivo Black',sans-serif;font-size:1.5rem;line-height:1.05;margin-bottom:10px;padding-right:66px}
   .post p{font-size:.98rem;line-height:1.55;margin-bottom:14px}
   .tags{display:flex;flex-wrap:wrap;gap:7px}
   .tags span{font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;
@@ -74,7 +74,8 @@
   .post:hover .arrow{transform:rotate(-12deg) scale(1.1)}
 
   @media(max-width:760px){body{cursor:auto;padding:14px 16px 50px}.cursor,.shape{display:none}
-    .nav{flex-direction:column;gap:12px}.post .arrow{display:none}}
+    .nav{flex-direction:column;gap:12px}.post .arrow{display:none}
+    .post h2,.post .meta{padding-right:0}}
   @media(max-width:420px){:root{--shadow:5px 5px 0 var(--ink);--shadow-lg:7px 7px 0 var(--ink)}
     .post h2{font-size:1.25rem}.post{padding:20px}.nav .tabs a{font-size:.78rem;padding:8px 13px}}
 </style>
@@ -88,6 +89,7 @@
     <a href="/" class="brand" data-hover>MP.</a>
     <div class="tabs">
       <a href="/" data-hover>Home</a>
+      <a href="/tools/" data-hover>Tools</a>
       <a href="/blog/" class="active" data-hover>Blog</a>
     </div>
   </div>
