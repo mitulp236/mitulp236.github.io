@@ -150,17 +150,17 @@
       theme: 'base',
       themeVariables: {
         fontFamily: 'Inter, sans-serif',
-        primaryColor: 'var(--card)',
-        primaryBorderColor: 'var(--gold)',
-        primaryTextColor: 'var(--ink)',
+        primaryColor: '#fff9f2',
+        primaryBorderColor: '#ff5c00',
+        primaryTextColor: '#1a0f06',
         secondaryColor: '#FBF6EC',
-        tertiaryColor: 'var(--bg)',
-        lineColor: 'var(--muted)',
+        tertiaryColor: '#fff4e6',
+        lineColor: '#7c6752',
         noteBkgColor: '#FBF6EC',
-        noteBorderColor: 'var(--gold-soft)',
-        actorBorder: 'var(--gold)',
-        actorBkg: 'var(--card)',
-        pie1: 'var(--gold)', pie2: 'var(--ink)', pie3: 'var(--gold-soft)', pie4: 'var(--muted)',
+        noteBorderColor: '#1a0f06',
+        actorBorder: '#ff5c00',
+        actorBkg: '#fff9f2',
+        pie1: '#ff5c00', pie2: '#1a0f06', pie3: '#1a0f06', pie4: '#7c6752',
       },
     });
 
@@ -257,7 +257,7 @@
         const c = document.createElement('canvas');
         c.width = w * scale; c.height = h * scale;
         const ctx = c.getContext('2d');
-        ctx.fillStyle = 'var(--bg)';
+        ctx.fillStyle = '#fff4e6';
         ctx.fillRect(0, 0, c.width, c.height);
         ctx.drawImage(img, 0, 0, c.width, c.height);
         c.toBlob((blob) => { download('diagram.png', blob); toast('PNG downloaded (2×)'); }, 'image/png');

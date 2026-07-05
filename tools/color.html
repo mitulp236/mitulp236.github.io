@@ -163,9 +163,9 @@
     <div class="panel">
       <h2>Picker</h2>
       <div class="pick-row">
-        <div class="swatch-big" id="swatch"><input type="color" id="picker" value="var(--gold)" /></div>
+        <div class="swatch-big" id="swatch"><input type="color" id="picker" value="#ff5c00" /></div>
         <div class="pick-fields">
-          <div class="fmt-row"><span class="lab">HEX</span><input id="hexIn" value="var(--gold)" spellcheck="false" maxlength="7" /><button class="copy-mini" data-copy="hex">COPY</button></div>
+          <div class="fmt-row"><span class="lab">HEX</span><input id="hexIn" value="#ff5c00" spellcheck="false" maxlength="7" /><button class="copy-mini" data-copy="hex">COPY</button></div>
           <div class="fmt-row"><span class="lab">RGB</span><span class="val" id="rgbOut"></span><button class="copy-mini" data-copy="rgb">COPY</button></div>
           <div class="fmt-row"><span class="lab">HSL</span><span class="val" id="hslOut"></span><button class="copy-mini" data-copy="hsl">COPY</button></div>
         </div>
@@ -185,8 +185,8 @@
     <div class="panel">
       <h2>Contrast checker (WCAG)</h2>
       <div class="c-inputs">
-        <div class="ci"><input type="color" id="fg" value="var(--ink)" /><span>Text</span></div>
-        <div class="ci"><input type="color" id="bg" value="var(--bg)" /><span>Background</span></div>
+        <div class="ci"><input type="color" id="fg" value="#1a0f06" /><span>Text</span></div>
+        <div class="ci"><input type="color" id="bg" value="#fff4e6" /><span>Background</span></div>
         <button class="btn btn-ghost btn-sm" id="swapBtn" title="Swap">⇄</button>
       </div>
       <div class="c-sample" id="cSample">
@@ -203,8 +203,8 @@
       <h2>Gradient builder</h2>
       <div class="g-preview" id="gPrev"></div>
       <div class="g-controls">
-        <div class="ci"><input type="color" id="g1" value="var(--gold)" /></div>
-        <div class="ci"><input type="color" id="g2" value="var(--bg)" /></div>
+        <div class="ci"><input type="color" id="g1" value="#ff5c00" /></div>
+        <div class="ci"><input type="color" id="g2" value="#fff4e6" /></div>
         <select id="gType"><option value="linear">Linear</option><option value="radial">Radial</option></select>
         <input type="range" id="gAngle" min="0" max="360" value="135" />
         <span id="gAngleVal" style="font-size:12px;font-weight:700;min-width:34px">135°</span>
@@ -273,7 +273,7 @@
     const copyText = async (s) => { await navigator.clipboard.writeText(s); toast(s + ' copied'); };
 
     /* ── picker + harmonies ── */
-    let current = 'var(--gold)';
+    let current = "#ff5c00";
     const fmts = { hex: '', rgb: '', hsl: '' };
 
     function setColor(hex, fromInput) {
