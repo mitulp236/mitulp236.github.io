@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blog — Mitul Patel</title>
+<meta name="description" content="Notes, deep dives and lessons from building software — by Mitul Patel." />
+<link rel="icon" href="/static/favicons/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--orange:#ff5c00;--cream:#fff4e6;--ink:#1a0f06;--paper:#fff9f2;
+    --lime:#c8ff2e;--sky:#3fd0ff;--pink:#ff6ba6;
+    --shadow:7px 7px 0 var(--ink);--shadow-lg:11px 11px 0 var(--ink);--border:4px solid var(--ink)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Space Grotesk',sans-serif;background:var(--cream);color:var(--ink);
+    min-height:100vh;overflow-x:hidden;cursor:none;padding:16px 24px 60px}
+  ::selection{background:var(--lime)}
+  body::before{content:"";position:fixed;inset:0;z-index:-2;
+    background-image:radial-gradient(var(--orange) 1.4px, transparent 1.4px);
+    background-size:24px 24px;opacity:.22;animation:drift 18s linear infinite}
+  @keyframes drift{to{background-position:240px 240px}}
+  .cursor{position:fixed;width:20px;height:20px;border:3px solid var(--ink);background:var(--orange);
+    border-radius:50%;pointer-events:none;z-index:999;transform:translate(-50%,-50%);
+    transition:width .18s,height .18s,background .18s;mix-blend-mode:multiply}
+  .cursor.big{width:52px;height:52px;background:var(--lime)}
+  .shape{position:fixed;border:var(--border);z-index:-1}
+  .shape.s1{width:56px;height:56px;background:var(--pink);top:20%;right:6%;animation:spin 10s linear infinite}
+  .shape.s2{width:40px;height:40px;background:var(--sky);border-radius:50%;bottom:12%;left:5%;animation:float 6s ease-in-out infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}@keyframes float{50%{transform:translateY(-14px)}}
+
+  .wrap{width:min(920px,100%);margin:0 auto}
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px}
+  .nav .brand{font-family:'Archivo Black',sans-serif;font-size:1.2rem;background:var(--ink);
+    color:var(--lime);padding:7px 13px;border:var(--border);box-shadow:5px 5px 0 var(--orange);
+    transform:rotate(-2deg);text-decoration:none}
+  .nav .brand:hover{transform:rotate(2deg) scale(1.04)}
+  .nav .tabs{display:flex;gap:9px}
+  .nav .tabs a{font-family:'Archivo Black',sans-serif;font-size:.85rem;text-transform:uppercase;
+    text-decoration:none;color:var(--ink);background:var(--paper);padding:9px 16px;border:var(--border);
+    box-shadow:4px 4px 0 var(--ink);transition:transform .12s,box-shadow .12s,background .12s}
+  .nav .tabs a:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);background:var(--lime)}
+  .nav .tabs a.active{background:var(--orange);color:var(--paper)}
+
+  .page-title{font-family:'Archivo Black',sans-serif;font-size:clamp(2.4rem,7vw,3.6rem);
+    text-transform:uppercase;line-height:.95;margin-bottom:8px;animation:pop .5s cubic-bezier(.2,.9,.3,1.4) both}
+  .page-title .hl{color:var(--orange);position:relative;display:inline-block}
+  .page-title .hl::after{content:"";position:absolute;left:-3px;right:-3px;bottom:5px;height:24%;
+    background:var(--lime);z-index:-1;transform:skew(-8deg)}
+  .page-sub{font-family:'Space Mono',monospace;font-weight:700;background:var(--ink);color:var(--lime);
+    display:inline-block;padding:5px 11px;border:3px solid var(--ink);margin-bottom:36px;transform:rotate(-1deg)}
+  @keyframes pop{from{opacity:0;transform:translateY(24px)}}
+
+  .post{display:block;text-decoration:none;color:var(--ink);background:var(--paper);
+    border:var(--border);box-shadow:var(--shadow);padding:24px 26px;margin-bottom:22px;
+    transition:transform .16s,box-shadow .16s;position:relative;
+    animation:rise .5s cubic-bezier(.2,.9,.3,1.4) both}
+  @keyframes rise{from{opacity:0;transform:translateY(28px)}}
+  .post:hover{transform:translate(-5px,-5px);box-shadow:var(--shadow-lg);background:#fff}
+  .post .meta{font-family:'Space Mono',monospace;font-size:.76rem;font-weight:700;
+    text-transform:uppercase;letter-spacing:1px;opacity:.65;margin-bottom:8px}
+  .post h2{font-family:'Archivo Black',sans-serif;font-size:1.5rem;line-height:1.05;margin-bottom:10px}
+  .post p{font-size:.98rem;line-height:1.55;margin-bottom:14px}
+  .tags{display:flex;flex-wrap:wrap;gap:7px}
+  .tags span{font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;
+    background:var(--sky);border:3px solid var(--ink);padding:3px 9px;box-shadow:3px 3px 0 var(--ink)}
+  .tags span:nth-child(2){background:var(--pink)}
+  .tags span:nth-child(3){background:var(--lime)}
+  .post .arrow{position:absolute;top:22px;right:24px;font-family:'Archivo Black',sans-serif;
+    font-size:1.4rem;background:var(--orange);color:var(--paper);border:3px solid var(--ink);
+    width:42px;height:42px;display:grid;place-items:center;box-shadow:3px 3px 0 var(--ink);
+    transition:transform .16s}
+  .post:hover .arrow{transform:rotate(-12deg) scale(1.1)}
+
+  @media(max-width:760px){body{cursor:auto;padding:14px 16px 50px}.cursor,.shape{display:none}
+    .nav{flex-direction:column;gap:12px}.post .arrow{display:none}}
+  @media(max-width:420px){:root{--shadow:5px 5px 0 var(--ink);--shadow-lg:7px 7px 0 var(--ink)}
+    .post h2{font-size:1.25rem}.post{padding:20px}.nav .tabs a{font-size:.78rem;padding:8px 13px}}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="shape s1"></div><div class="shape s2"></div>
+
+<div class="wrap">
+  <div class="nav">
+    <a href="/" class="brand" data-hover>MP.</a>
+    <div class="tabs">
+      <a href="/" data-hover>Home</a>
+      <a href="/blog/" class="active" data-hover>Blog</a>
+    </div>
+  </div>
+
+  <h1 class="page-title">The <span class="hl">Blog</span></h1>
+  <div class="page-sub">// notes from the trenches of building software</div>
+
+  <a class="post" href="/blog/problems-with-pubnub.html" data-hover>
+    <span class="arrow">→</span>
+    <div class="meta">Feb 25, 2024 · 4 min read</div>
+    <h2>Problems with PubNub: A Deep Dive into Chat System Challenges</h2>
+    <p>We set out to build one-to-one, group and community chat on top of PubNub — and hit wall after wall: silent channel-group failures, painful push-token registration, no pagination, and a 32KB payload ceiling. Here's what broke and why.</p>
+    <div class="tags"><span>#chat</span><span>#pubnub</span><span>#tech</span></div>
+  </a>
+</div>
+
+<script>
+  const cursor=document.getElementById('cursor');
+  let cx=innerWidth/2,cy=innerHeight/2,tx=cx,ty=cy;
+  addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});
+  (function loop(){cx+=(tx-cx)*.2;cy+=(ty-cy)*.2;cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(loop)})();
+  document.querySelectorAll('[data-hover]').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cursor.classList.add('big'));
+    el.addEventListener('mouseleave',()=>cursor.classList.remove('big'));
+  });
+  addEventListener('mousemove',e=>{const dx=(e.clientX/innerWidth-.5),dy=(e.clientY/innerHeight-.5);
+    document.querySelectorAll('.shape').forEach((s,i)=>{const f=(i+1)*12;s.style.marginLeft=dx*f+'px';s.style.marginTop=dy*f+'px'})});
+</script>
+</body>
+</html>
