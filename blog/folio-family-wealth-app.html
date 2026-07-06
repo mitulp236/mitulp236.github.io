@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>I built a private finance app for my whole family — Mitul Patel</title>
+<meta name="description" content="Folio is a desktop app that keeps all your family money in one place — stocks, funds, bank, deposits, documents and an AI helper — and it runs fully on your own machine. Nothing leaves your computer." />
+<link rel="icon" href="/static/favicons/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--orange:#ff5c00;--cream:#fff4e6;--ink:#1a0f06;--paper:#fff9f2;
+    --lime:#c8ff2e;--sky:#3fd0ff;--pink:#ff6ba6;
+    --shadow:7px 7px 0 var(--ink);--shadow-lg:11px 11px 0 var(--ink);--border:4px solid var(--ink)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Space Grotesk',sans-serif;background:var(--cream);color:var(--ink);
+    min-height:100vh;overflow-x:hidden;cursor:none;padding:16px 24px 70px}
+  ::selection{background:var(--lime)}
+  body::before{content:"";position:fixed;inset:0;z-index:-2;
+    background-image:radial-gradient(var(--orange) 1.4px, transparent 1.4px);
+    background-size:24px 24px;opacity:.18;animation:drift 18s linear infinite}
+  @keyframes drift{to{background-position:240px 240px}}
+  .cursor{position:fixed;width:20px;height:20px;border:3px solid var(--ink);background:var(--orange);
+    border-radius:50%;pointer-events:none;z-index:999;transform:translate(-50%,-50%);
+    transition:width .18s,height .18s,background .18s;mix-blend-mode:multiply}
+  .cursor.big{width:52px;height:52px;background:var(--lime)}
+  .progress{position:fixed;top:0;left:0;height:7px;width:0;background:var(--orange);
+    border-bottom:3px solid var(--ink);z-index:998}
+
+  .wrap{width:min(820px,100%);margin:0 auto}
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
+  .nav .brand{font-family:'Archivo Black',sans-serif;font-size:1.2rem;background:var(--ink);
+    color:var(--lime);padding:7px 13px;border:var(--border);box-shadow:5px 5px 0 var(--orange);
+    transform:rotate(-2deg);text-decoration:none}
+  .nav .brand:hover{transform:rotate(2deg) scale(1.04)}
+  .nav .tabs{display:flex;gap:9px}
+  .nav .tabs a{font-family:'Archivo Black',sans-serif;font-size:.85rem;text-transform:uppercase;
+    text-decoration:none;color:var(--ink);background:var(--paper);padding:9px 16px;border:var(--border);
+    box-shadow:4px 4px 0 var(--ink);transition:transform .12s,box-shadow .12s,background .12s}
+  .nav .tabs a:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);background:var(--lime)}
+  .nav .tabs a.active{background:var(--orange);color:var(--paper)}
+
+  .back{display:inline-block;font-family:'Space Mono',monospace;font-weight:700;font-size:.8rem;
+    text-decoration:none;color:var(--ink);background:var(--sky);border:3px solid var(--ink);
+    box-shadow:3px 3px 0 var(--ink);padding:6px 12px;margin-bottom:22px;transition:transform .12s,box-shadow .12s}
+  .back:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink)}
+
+  header.post-head{background:var(--orange);border:var(--border);box-shadow:var(--shadow-lg);
+    padding:30px 30px 26px;margin-bottom:30px;animation:pop .5s cubic-bezier(.2,.9,.3,1.4) both}
+  @keyframes pop{from{opacity:0;transform:translateY(24px)}}
+  header.post-head h1{font-family:'Archivo Black',sans-serif;font-size:clamp(1.7rem,5vw,2.5rem);
+    line-height:1.05;color:var(--paper);text-transform:uppercase;margin-bottom:16px}
+  .byline{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .byline .pill{font-family:'Space Mono',monospace;font-size:.75rem;font-weight:700;
+    background:var(--paper);border:3px solid var(--ink);padding:4px 10px;box-shadow:3px 3px 0 var(--ink)}
+  .byline .pill.dark{background:var(--ink);color:var(--lime)}
+
+  article h2{font-family:'Archivo Black',sans-serif;font-size:1.4rem;text-transform:uppercase;
+    display:inline-block;background:var(--lime);border:var(--border);box-shadow:var(--shadow);
+    padding:6px 14px;margin:34px 0 16px;transform:rotate(-1deg)}
+  article p{font-size:1.06rem;line-height:1.7;margin-bottom:16px}
+  article p .hl{background:var(--orange);color:var(--paper);padding:0 4px;font-weight:600}
+  article strong{font-weight:700}
+
+  .lead{font-size:1.18rem;line-height:1.7;font-weight:500}
+
+  /* screenshots */
+  figure.shot{margin:24px 0 28px}
+  figure.shot img{display:block;width:100%;height:auto;border:var(--border);box-shadow:var(--shadow-lg);background:var(--paper)}
+  figure.shot figcaption{font-family:'Space Mono',monospace;font-size:.82rem;font-weight:700;margin-top:12px;
+    background:var(--ink);color:var(--cream);display:inline-block;padding:5px 11px;border:3px solid var(--ink)}
+
+  /* feature list */
+  .feat{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:6px 0 8px}
+  .feat li{background:var(--paper);border:var(--border);box-shadow:5px 5px 0 var(--ink);padding:16px 18px;
+    transition:transform .14s,box-shadow .14s}
+  .feat li:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--ink)}
+  .feat li b{font-family:'Archivo Black',sans-serif;font-size:1rem;display:block;margin-bottom:5px;text-transform:uppercase}
+  .feat li span{font-size:.95rem;line-height:1.5}
+  .feat li .ic{font-size:1.3rem;margin-right:6px}
+
+  .callout{background:var(--paper);border:var(--border);border-left:12px solid var(--orange);
+    box-shadow:var(--shadow);padding:18px 22px;margin:22px 0;font-size:1.04rem;line-height:1.65}
+  .callout b{font-family:'Archivo Black',sans-serif}
+
+  .stack{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 8px}
+  .stack span{font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;background:var(--sky);
+    border:3px solid var(--ink);padding:4px 10px;box-shadow:3px 3px 0 var(--ink)}
+  .stack span:nth-child(3n){background:var(--lime)}
+  .stack span:nth-child(3n+1){background:var(--pink)}
+
+  .end{margin-top:38px;background:var(--ink);color:var(--cream);border:var(--border);
+    box-shadow:var(--shadow);padding:22px 26px;font-family:'Space Mono',monospace;font-size:.95rem;line-height:1.65}
+  .end .tags{margin-top:14px;display:flex;gap:7px;flex-wrap:wrap}
+  .end .tags span{background:var(--orange);color:var(--paper);border:3px solid var(--cream);padding:3px 9px;font-size:.75rem;font-weight:700}
+
+  @media(max-width:760px){body{cursor:auto;padding:14px 16px 50px}.cursor{display:none}
+    .nav{flex-direction:column;gap:12px}.feat{grid-template-columns:1fr}}
+  @media(max-width:420px){:root{--shadow:5px 5px 0 var(--ink);--shadow-lg:7px 7px 0 var(--ink)}
+    header.post-head{padding:22px}article h2{font-size:1.15rem}article p{font-size:1rem}
+    .nav .tabs a{font-size:.78rem;padding:8px 13px}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="cursor" id="cursor"></div>
+
+<div class="wrap">
+  <div class="nav">
+    <a href="/" class="brand" data-hover>MP.</a>
+    <div class="tabs">
+      <a href="/" data-hover>Home</a>
+      <a href="/tools/" data-hover>Tools</a>
+      <a href="/blog/" class="active" data-hover>Blog</a>
+    </div>
+  </div>
+
+  <a href="/blog/" class="back" data-hover>← back to blog</a>
+
+  <header class="post-head">
+    <h1>I built a private money app for my whole family</h1>
+    <div class="byline">
+      <span class="pill">✍️ Mitul Patel</span>
+      <span class="pill">📅 Jul 05, 2026</span>
+      <span class="pill dark">🖥️ Desktop app</span>
+      <span class="pill">⏱️ 6 min read</span>
+    </div>
+  </header>
+
+  <article>
+    <p class="lead">I made a desktop app called <span class="hl">Folio</span>. It keeps all of my family's money in <strong>one place</strong> — stocks, mutual funds, bank accounts, fixed deposits, insurance, and important papers. It runs fully on my own computer. Nothing goes to the cloud. Only live prices and news are pulled from the internet.</p>
+
+    <figure class="shot">
+      <img src="/blog/img/folio/login.jpg" alt="Folio login screen — clear, live and private" loading="lazy">
+      <figcaption>The sign-in screen. Locked with a password, works offline.</figcaption>
+    </figure>
+
+    <h2>Why I built it</h2>
+    <p>Our family money was spread all over the place. Some stocks in one app. Bank details in a note. Fixed deposits on a bit of paper. Policy PDFs lost in email. When I wanted a simple answer — <em>"how much do we have in total?"</em> — there was no easy way to see it.</p>
+    <p>I also did not want to put all of this on some company's server. Money data is private. So I set two hard rules: it must show <span class="hl">everything in one place</span>, and the data must <span class="hl">never leave my machine</span>.</p>
+
+    <figure class="shot">
+      <img src="/blog/img/folio/overview.jpg" alt="Folio overview dashboard with net worth, charts and asset split" loading="lazy">
+      <figcaption>The home screen — total family net worth, profit/loss, and where the money sits.</figcaption>
+    </figure>
+
+    <p>This is the first screen. In one look I can see the <strong>total family net worth</strong>, how much is profit, and how the money is split between stocks, funds, savings and deposits. The numbers update as prices move.</p>
+
+    <h2>What it can do</h2>
+    <p>Folio is not just one thing — it is a small set of tools that all share the same data. Here is the full list, in plain words:</p>
+
+    <ul class="feat">
+      <li><b><span class="ic">📊</span>Stocks</b><span>All your shares with live prices from NSE/BSE. It shows buy price, today's value and profit.</span></li>
+      <li><b><span class="ic">🏦</span>Mutual Funds</b><span>Your SIPs and funds with live NAV pulled from AMFI. Invested vs current, per fund.</span></li>
+      <li><b><span class="ic">💰</span>Bank &amp; FD</b><span>Savings balances and fixed deposits, by person and by bank.</span></li>
+      <li><b><span class="ic">👀</span>Watchlist</b><span>Stocks you want to buy later, with a target quantity and how much you need.</span></li>
+      <li><b><span class="ic">🎯</span>IPOs</b><span>Track IPO applications — money blocked, allotted or sold.</span></li>
+      <li><b><span class="ic">₿</span>Crypto</b><span>Your coins and their live value, kept next to everything else.</span></li>
+      <li><b><span class="ic">👨‍👩‍👧</span>Members</b><span>Each family member is a person in the app. Every record belongs to someone.</span></li>
+      <li><b><span class="ic">📁</span>Documents</b><span>A safe box for important files — kept on your own disk, not the cloud.</span></li>
+      <li><b><span class="ic">🛡️</span>Insurance</b><span>All policies in one list, with the PDF attached.</span></li>
+      <li><b><span class="ic">💳</span>Card Vault</b><span>Card details, locked behind your password.</span></li>
+      <li><b><span class="ic">📝</span>Notes</b><span>Quick notes tied to your money — no separate app needed.</span></li>
+      <li><b><span class="ic">🤖</span>AI Analyst</b><span>Ask AI to check your portfolio and give plain advice (uses your own key).</span></li>
+    </ul>
+
+    <p>Plus <strong>market news</strong>, and one-click <strong>Excel</strong> import and export so I can move data in and out any time.</p>
+
+    <figure class="shot">
+      <img src="/blog/img/folio/stocks.jpg" alt="Folio stocks page with live prices and profit per holding" loading="lazy">
+      <figcaption>Stocks — each holding with live price, value and profit/loss.</figcaption>
+    </figure>
+
+    <p>The stock and fund pages read the ticker for each holding and fetch the live price. So the profit and loss you see is real-time, not something I typed in.</p>
+
+    <figure class="shot">
+      <img src="/blog/img/folio/funds.jpg" alt="Folio mutual funds page with live NAV" loading="lazy">
+      <figcaption>Mutual funds — matched to their AMFI code for live NAV.</figcaption>
+    </figure>
+
+    <figure class="shot">
+      <img src="/blog/img/folio/bank.jpg" alt="Folio bank and fixed deposit page" loading="lazy">
+      <figcaption>Bank &amp; FD — savings and deposits, split by person and by bank.</figcaption>
+    </figure>
+
+    <h2>The AI helper</h2>
+    <p>The part I like most is the <span class="hl">AI Analyst</span>. It reads your own numbers and gives a simple review — like a health check on your money. It can suggest what looks risky, what is doing well, and what to think about next. You plug in your own AI key, so the app stays free and private.</p>
+
+    <figure class="shot">
+      <img src="/blog/img/folio/analyst.jpg" alt="Folio AI Analyst with portfolio health check and other modes" loading="lazy">
+      <figcaption>AI Analyst — health check, buy/sell/hold ideas, risk flags and more.</figcaption>
+    </figure>
+
+    <h2>How it works (the tech part)</h2>
+    <p>Folio is <strong>one desktop app written in Rust</strong>. I used <span class="hl">Tauri</span> to make it a real Mac app with a proper window and menu. The whole thing is a single program — no separate server to start, no Node, no Docker.</p>
+    <p>Inside that one program there is a tiny web server running only on <code>127.0.0.1</code> (your own machine). It talks to a small <strong>SQLite</strong> database file. The screen you see is a React app that asks this local server for data. Because the server only listens to your own computer, nothing is open to the internet.</p>
+
+    <div class="callout"><b>Where your data lives:</b> everything — the database and your uploaded files — sits in one folder on your disk (by default <code>~/Documents/Folio</code>). You can move it, back it up, or put it on a USB drive. The app just points to that folder. Passwords are encrypted. The only time the app touches the internet is to fetch live prices, news, and (if you ask) the AI review.</p>
+
+    <div class="stack">
+      <span>Rust</span><span>Tauri v2</span><span>SQLite</span><span>axum</span><span>React</span><span>Local-only</span><span>Encrypted</span>
+    </div>
+
+    <h2>The result</h2>
+    <p>Now there is one app I open to see the whole picture. Add a stock, a deposit, or a policy, and it all rolls up into a single number I can trust. It is <strong>private</strong> (stays on my machine), <strong>live</strong> (real prices), and <strong>all in one place</strong> — which is exactly what I wanted from the start.</p>
+
+    <div class="end">
+      Built for my own family, then made general so any family can use it. If you care about keeping your money data on your own computer, this is the kind of app I love making.
+      <div class="tags"><span>#rust</span><span>#tauri</span><span>#desktop</span><span>#privacy</span><span>#finance</span></div>
+    </div>
+  </article>
+</div>
+
+<script>
+  const cursor=document.getElementById('cursor');
+  let cx=innerWidth/2,cy=innerHeight/2,tx=cx,ty=cy;
+  addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});
+  (function loop(){cx+=(tx-cx)*.2;cy+=(ty-cy)*.2;cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(loop)})();
+  document.querySelectorAll('[data-hover],a,.feat li').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cursor.classList.add('big'));
+    el.addEventListener('mouseleave',()=>cursor.classList.remove('big'));
+  });
+  const bar=document.getElementById('progress');
+  addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight;
+    bar.style.width=(h>0?(scrollY/h*100):0)+'%'});
+</script>
+</body>
+</html>
